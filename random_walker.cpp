@@ -83,9 +83,11 @@ int main()
     int n = 1000;
     sf::Clock clock;
     sf::RenderWindow window(sf::VideoMode(width, height), "Insert Text Here");
-    window.setFramerateLimit(60);
+    //window.setFramerateLimit(60);
     sf::CircleShape walker;
-    window.clear(sf::Color::White);
+    
+    sf::RenderTexture texture;
+    texture.create(width,height);
     Walker walkers[n];
 
     while (window.isOpen())
@@ -105,9 +107,12 @@ int main()
         for (int i = 0; i < n; i++)
         {
             walkers[i].UpdateValues();
-            window.draw(walkers[i]);
+            texture.draw(walkers[i]);
         }
-
+        window.clear(sf::Color::White);
+        texture.display();
+        sf::Sprite sprite(texture.getTexture());
+        window.draw(sprite);
         window.display();
     }
     return 0;
